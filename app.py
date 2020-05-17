@@ -1,36 +1,33 @@
+"""
+ * Copyright 2020 Mia srl
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+"""
 
-# Let's get this party started!
 from wsgiref.simple_server import make_server
-
 import falcon
 
-
-# Falcon follows the REST architectural style, meaning (among
-# other things) that you think in terms of resources and state
-# transitions, which map to HTTP verbs.
-class ThingsResource:
+class SayHello:
     def on_get(self, req, resp):
-        """Handles GET requests"""
-        resp.status = falcon.HTTP_200  # This is the default status
-        resp.body = ('\nTwo things awe me most, the starry sky '
-                     'above me and the moral law within me.\n'
-                     '\n'
-                     '    ~ Immanuel Kant\n\n')
+        resp.status = falcon.HTTP_200
+        resp.body = ('Hello!')
 
-
-# falcon.App instances are callable WSGI apps
-# in larger applications the app is created in a separate file
 app = falcon.API()
-
-# Resources are represented by long-lived class instances
-things = ThingsResource()
-
-# things will handle all requests to the '/things' URL path
-app.add_route('/hello', things)
+helloer = SayHello()
+app.add_route('/hello', helloer)
 
 if __name__ == '__main__':
     with make_server('', 3000, app) as httpd:
         print('Serving on port 3000...')
 
-        # Serve until process is killed
         httpd.serve_forever()
