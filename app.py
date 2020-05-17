@@ -16,18 +16,38 @@
 
 from wsgiref.simple_server import make_server
 import falcon
+import json
 
-class SayHello:
-    def on_get(self, req, resp):
-        resp.status = falcon.HTTP_200
-        resp.body = ('Hello!')
+class HelloResource:
+  def on_get(self, req, resp):
+    resp.status = falcon.HTTP_200
+    hello = { 'message': "Hello World!" }
+    resp.body = json.dumps(hello, ensure_ascii=False)
+
+class ReadyResource:
+  def on_get(self, req, resp):
+    resp.status = falcon.HTTP_200
+    ready = { 'statusOK': True }
+    resp.body = json.dumps(ready, ensure_ascii=False)
+
+class HealthResource:
+  def on_get(self, req, resp):
+    resp.status = falcon.HTTP_200
+    health = { 'statusOK': True }
+    resp.body = json.dumps(health, ensure_ascii=False)
+
+
+helloer = HelloResource()
+ready = ReadyResource()
+health = HealthResource()
 
 app = falcon.API()
-helloer = SayHello()
+
 app.add_route('/hello', helloer)
+app.add_route('/-/ready', ready)
+app.add_route('/-/healthz', health)
 
 if __name__ == '__main__':
-    with make_server('', 3000, app) as httpd:
-        print('Serving on port 3000...')
-
-        httpd.serve_forever()
+  with make_server('', 3000, app) as httpd:
+    print('Serving on port 3000...')
+    httpd.serve_forever()

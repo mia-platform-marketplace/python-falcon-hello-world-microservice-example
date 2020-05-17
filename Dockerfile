@@ -5,8 +5,8 @@ EXPOSE 3000
 WORKDIR /app
 
 ADD  . /app
-RUN pip install falcon
-RUN pip install uwsgi
+RUN pip install -r requirements.txt
+
 
 
 ARG COMMIT_SHA=<not-specified>
