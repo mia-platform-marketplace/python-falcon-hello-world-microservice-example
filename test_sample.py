@@ -9,7 +9,6 @@ def client():
 
 
 def test_get_message(client):
-    doc = {u'message': u'Hello World!'}
-
+    doc = {'message': 'Hello World!'}
     result = client.simulate_get('/hello')
     assert result.json == doc
