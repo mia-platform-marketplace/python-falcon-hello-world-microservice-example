@@ -1,9 +1,9 @@
-# %CUSTOM_PLUGIN_SERVICE_NAME%
+# mia_template_service_name_placeholder
 
 Based on https://github.com/falconry/falcon
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 python3 app.py
 ```
 
