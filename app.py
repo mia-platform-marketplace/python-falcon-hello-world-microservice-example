@@ -40,18 +40,21 @@ class HealthResource:
         resp.body = json.dumps(health, ensure_ascii=False)
 
 
-helloer = HelloResource()
-ready = ReadyResource()
-health = HealthResource()
+def create():
+    helloer = HelloResource()
+    ready = ReadyResource()
+    health = HealthResource()
 
-app = falcon.API()
+    app = falcon.API()
 
-app.add_route('/hello', helloer)
-app.add_route('/-/ready', ready)
-app.add_route('/-/healthz', health)
+    app.add_route('/hello', helloer)
+    app.add_route('/-/ready', ready)
+    app.add_route('/-/healthz', health)
+    return app
 
 
 if __name__ == '__main__':
+    app = create()
     with make_server('', 3000, app) as httpd:
         print('Serving on port 3000...')
         httpd.serve_forever()

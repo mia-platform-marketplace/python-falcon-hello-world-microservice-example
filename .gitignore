@@ -1,3 +1,6 @@
 .DS_STORE
 .vscode
 build
+app.pyc
+lastfailed
+__pycache__/
